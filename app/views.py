@@ -39,7 +39,7 @@ def upload():
     if request.method == 'POST':
         if form.validate_on_submit():
             description = request.form["description"]
-            photo = request.form["photo"]
+            photo = request.files["photo"]
             filename = secure_filename(photo.filename)
             photo.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
             return jsonify({"message": "File Uploaded Successfully", "filename": filename, "description": description})

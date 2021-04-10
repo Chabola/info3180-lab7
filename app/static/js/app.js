@@ -69,11 +69,76 @@ const NotFound = {
     }
 };
 
+const UploadForm = {
+    name: "UploadForm",
+    template:`
+    <div>
+    <h2> Upload Form </h2><br>
+    <form v-on:submit.prevent="uploadPhoto" method="POST" enctype="multipart/form-data" id="uploadForm">
+    <div>
+        <label><h6> Description <span class= "req">(Required)</span>: </h6></label><br>
+        <textarea name="description"> </textarea><br><br>
+        <label><h6> Photo <span class= "req">(Required)</span>: </h6></label><br>
+        <input type="file" name="photo">
+    </div>
+        <br><button>Upload</button>
+    </form>
+    </div> 
+    `,
+    uploadPhoto(){
+            let uploadForm = document.getElementById('uploadForm');
+            let form_data = new FormData(uploadForm);
+            fetch("/api/upload", {
+                method: 'POST',
+                body: form_data,
+                headers: {
+                    'X-CSRFToken': token
+                },
+                credentials: 'same-origin'
+            })
+                .then(function (response) {
+                return response.json();
+                })
+                .then(function (jsonResponse) {
+                // display a success message
+                console.log(jsonResponse);
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+            },
+
+    methods: {
+        uploadPhoto(){
+            let uploadForm = document.getElementById('uploadForm');
+            let form_data = new FormData(uploadForm);
+            fetch("/api/upload", {
+                method: 'POST',
+                body: form_data,
+                headers: {
+                    'X-CSRFToken': token
+                },
+                credentials: 'same-origin'
+            })
+                .then(function (response) {
+                return response.json();
+                })
+                .then(function (jsonResponse) {
+                // display a success message
+                console.log(jsonResponse);
+                })
+                .catch(function (error) {
+                console.log(error);
+                });
+            }
+    }, 
+};
+
 // Define Routes
 const routes = [
     { path: "/", component: Home },
     // Put other routes here
-
+    { path: "/upload" , component: UploadForm},
     // This is a catch all route in case none of the above matches
     { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFound }
 ];

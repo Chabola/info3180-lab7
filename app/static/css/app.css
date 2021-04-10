@@ -1,3 +1,12 @@
 body {
     padding-top: 5rem;
 }
+
+.req {
+	color: crimson;
+}
+textarea{
+	height:100px;
+	width: 300px;
+	resize: none;
+}
